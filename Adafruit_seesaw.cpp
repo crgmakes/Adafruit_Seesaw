@@ -175,6 +175,17 @@ uint32_t Adafruit_seesaw::getVersion() {
 
 /*!
  *********************************************************************
+ *  @brief        Returns the product code for this peripheral
+ *  @return       16-bit product code
+ ********************************************************************/
+ uint32_t Adafruit_seesaw::getProductCode()
+{
+  uint32_t version = getVersion();
+  return (version >> 16);
+}
+
+/*!
+ *********************************************************************
  *  @brief        Returns the version of the seesaw
  *  @param  pid   Pointer to uint16_t for product code result.
  *  @param  year  Pointer to uint8_t for date code year result.
@@ -191,6 +202,18 @@ bool Adafruit_seesaw::getProdDatecode(uint16_t *pid, uint8_t *year,
   *mon = (vers >> 7) & 0xF;
   *day = (vers >> 11) & 0x1F;
   return true;
+}
+
+/*!
+ *********************************************************************
+ *  @brief        Returns the number of channels this peripheral has
+ *  @return       count or zero if none
+ ********************************************************************/
+uint8_t Adafruit_seesaw::getChannelCount()
+{
+  uint8_t buf[1];
+  this->read(SEESAW_STATUS_BASE, SEESAW_STATUS_COUNT, buf, 1);
+  return buf[0];
 }
 
 /*!

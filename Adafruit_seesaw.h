@@ -38,13 +38,14 @@
 /** Module Base Addreses
  *  The module base addresses for different seesaw modules.
  */
-enum {
+enum
+{
   SEESAW_STATUS_BASE = 0x00,
-  SEESAW_GPIO_BASE = 0x01,
+  SEESAW_GPIO_BASE = 0x01, // relay/switch
   SEESAW_SERCOM0_BASE = 0x02,
 
   SEESAW_TIMER_BASE = 0x08,
-  SEESAW_ADC_BASE = 0x09,
+  SEESAW_ADC_BASE = 0x09, // current
   SEESAW_DAC_BASE = 0x0A,
   SEESAW_INTERRUPT_BASE = 0x0B,
   SEESAW_DAP_BASE = 0x0C,
@@ -54,11 +55,18 @@ enum {
   SEESAW_KEYPAD_BASE = 0x10,
   SEESAW_ENCODER_BASE = 0x11,
   SEESAW_SPECTRUM_BASE = 0x12,
+
+  SEESAW_IR_BASE = 0x20,
+  SEESAW_RF_BASE = 0x21,
+  SEESAW_ENVIRONMENT_BASE = 0x22,
+  SEESAW_PARTICLE_BASE = 0x23,
+
 };
 
 /** GPIO module function address registers
  */
-enum {
+enum
+{
   SEESAW_GPIO_DIRSET_BULK = 0x02,
   SEESAW_GPIO_DIRCLR_BULK = 0x03,
   SEESAW_GPIO_BULK = 0x04,
@@ -74,17 +82,20 @@ enum {
 
 /** status module function address registers
  */
-enum {
+enum
+{
   SEESAW_STATUS_HW_ID = 0x01,
   SEESAW_STATUS_VERSION = 0x02,
   SEESAW_STATUS_OPTIONS = 0x03,
   SEESAW_STATUS_TEMP = 0x04,
+  SEESAW_STATUS_COUNT = 0x10,
   SEESAW_STATUS_SWRST = 0x7F,
 };
 
 /** timer module function address registers
  */
-enum {
+enum
+{
   SEESAW_TIMER_STATUS = 0x00,
   SEESAW_TIMER_PWM = 0x01,
   SEESAW_TIMER_FREQ = 0x02,
@@ -92,7 +103,8 @@ enum {
 
 /** ADC module function address registers
  */
-enum {
+enum
+{
   SEESAW_ADC_STATUS = 0x00,
   SEESAW_ADC_INTEN = 0x02,
   SEESAW_ADC_INTENCLR = 0x03,
@@ -103,7 +115,8 @@ enum {
 
 /** Sercom module function address registers
  */
-enum {
+enum
+{
   SEESAW_SERCOM_STATUS = 0x00,
   SEESAW_SERCOM_INTEN = 0x02,
   SEESAW_SERCOM_INTENCLR = 0x03,
@@ -113,7 +126,8 @@ enum {
 
 /** neopixel module function address registers
  */
-enum {
+enum
+{
   SEESAW_NEOPIXEL_STATUS = 0x00,
   SEESAW_NEOPIXEL_PIN = 0x01,
   SEESAW_NEOPIXEL_SPEED = 0x02,
@@ -124,13 +138,15 @@ enum {
 
 /** touch module function address registers
  */
-enum {
+enum
+{
   SEESAW_TOUCH_CHANNEL_OFFSET = 0x10,
 };
 
 /** keypad module function address registers
  */
-enum {
+enum
+{
   SEESAW_KEYPAD_STATUS = 0x00,
   SEESAW_KEYPAD_EVENT = 0x01,
   SEESAW_KEYPAD_INTENSET = 0x02,
@@ -141,7 +157,8 @@ enum {
 
 /** keypad module edge definitions
  */
-enum {
+enum
+{
   SEESAW_KEYPAD_EDGE_HIGH = 0,
   SEESAW_KEYPAD_EDGE_LOW,
   SEESAW_KEYPAD_EDGE_FALLING,
@@ -150,7 +167,8 @@ enum {
 
 /** encoder module edge definitions
  */
-enum {
+enum
+{
   SEESAW_ENCODER_STATUS = 0x00,
   SEESAW_ENCODER_INTENSET = 0x10,
   SEESAW_ENCODER_INTENCLR = 0x20,
@@ -160,7 +178,8 @@ enum {
 
 /** Audio spectrum module function address registers
  */
-enum {
+enum
+{
   SEESAW_SPECTRUM_RESULTS_LOWER = 0x00, // Audio spectrum bins 0-31
   SEESAW_SPECTRUM_RESULTS_UPPER = 0x01, // Audio spectrum bins 32-63
   // If some future device supports a larger spectrum, can add additional
@@ -170,6 +189,16 @@ enum {
   SEESAW_SPECTRUM_CHANNEL = 0xFD,
   SEESAW_SPECTRUM_RATE = 0xFE,
   SEESAW_SPECTRUM_STATUS = 0xFF,
+};
+
+/** keypad module function address registers
+ */
+enum
+{
+  SEESAW_PARTICLE_1 = 0x00,
+  SEESAW_PARTICLE_25 = 0x01,
+  SEESAW_PARTICLE_4 = 0x02,
+  SEESAW_PARTICLE_10 = 0x03,
 };
 
 #define ADC_INPUT_0_PIN 2 ///< default ADC input pin
@@ -183,7 +212,7 @@ enum {
 #define PWM_3_PIN 7 ///< default PWM output pin
 
 #ifndef INPUT_PULLDOWN
-#define INPUT_PULLDOWN                                                         \
+#define INPUT_PULLDOWN \
   0x03 ///< for compatibility with platforms that do not already define
        ///< INPUT_PULLDOWN
 #endif
@@ -200,8 +229,10 @@ enum {
 // clang-format on
 
 /** raw key event stucture for keypad module */
-union keyEventRaw {
-  struct {
+union keyEventRaw
+{
+  struct
+  {
     uint8_t EDGE : 2; ///< the edge that was triggered
     uint8_t NUM : 6;  ///< the event number
   } bit;              ///< bitfield format
@@ -209,8 +240,10 @@ union keyEventRaw {
 };
 
 /** extended key event stucture for keypad module */
-union keyEvent {
-  struct {
+union keyEvent
+{
+  struct
+  {
     uint8_t EDGE : 2;  ///< the edge that was triggered
     uint16_t NUM : 14; ///< the event number
   } bit;               ///< bitfield format
@@ -218,8 +251,10 @@ union keyEvent {
 };
 
 /** key state struct that will be written to seesaw chip keypad module */
-union keyState {
-  struct {
+union keyState
+{
+  struct
+  {
     uint8_t STATE : 1;  ///< the current state of the key
     uint8_t ACTIVE : 4; ///< the registered events for that key
   } bit;                ///< bitfield format
@@ -232,19 +267,22 @@ union keyState {
    helper IC
 */
 /**************************************************************************/
-class Adafruit_seesaw : public Print {
+class Adafruit_seesaw : public Print
+{
 public:
   // constructors
   Adafruit_seesaw(TwoWire *Wi = NULL);
-  ~Adafruit_seesaw(void){};
+  ~Adafruit_seesaw(void) {};
 
   bool begin(uint8_t addr = SEESAW_ADDRESS, int8_t flow = -1,
              bool reset = true);
   uint32_t getOptions();
   uint32_t getVersion();
+  uint32_t getProductCode();
   bool getProdDatecode(uint16_t *pid, uint8_t *year, uint8_t *mon,
                        uint8_t *day);
-
+  uint8_t getChannelCount();
+  
   bool SWReset();
 
   void pinMode(uint8_t pin, uint8_t mode);
@@ -296,11 +334,41 @@ public:
   bool disableEncoderInterrupt(uint8_t encoder = 0);
   void setEncoderPosition(int32_t pos, uint8_t encoder = 0);
 
+  //
+  // SEESAW_IR_BASE = 0x21,
+  // SEESAW_RF_BASE = 0x22,
+  // SEESAW_ENVIRONMENT_BASE = 0x23,
+  // SEESAW_PARTICLE_BASE = 0x24,
+
+    // Functions for IR module
+    void sendIrCode(uint8_t code);
+    uint8_t receiveIrCode();
+    
+    // Functions for RF module
+    void sendRfCode(uint8_t code);
+    uint8_t receiveRfCode();
+
+    // Functions for environment module
+    uint32_t getEnvironmentTemperature();
+    uint32_t getEnvironmentHumidity();
+    uint32_t getEnvironmentVoc();
+    uint32_t getEnvironmentNox();
+    uint32_t getEnvironmentCo2();
+
+    // Functions for particle module
+    uint32_t getParticleValue(uint8_t size);
+    uint32_t getParticleTemperature();
+    uint32_t getParticleHumidity();
+    uint32_t getParticleVoc();
+    uint32_t getParticleNox();
+    uint32_t getParticleCo2();
+
+
   virtual size_t write(uint8_t);
   virtual size_t write(const char *str);
 
 protected:
-  TwoWire *_i2cbus; /*!< The I2C Bus used to communicate with the seesaw */
+  TwoWire *_i2cbus;                    /*!< The I2C Bus used to communicate with the seesaw */
   Adafruit_I2CDevice *_i2c_dev = NULL; ///< The BusIO device for I2C control
 
   int8_t _flow; /*!< The flow control pin to use */
@@ -321,8 +389,10 @@ protected:
 
   /** Sercom interrupt enable register
    */
-  union sercom_inten {
-    struct {
+  union sercom_inten
+  {
+    struct
+    {
       uint8_t DATA_RDY : 1; ///< this bit is set when data becomes available
     } bit;                  ///< bitfields
     uint8_t reg;            ///< full register
